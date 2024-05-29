@@ -3,7 +3,7 @@ import {View, Text, SafeAreaView, StyleSheet} from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import RowText from "../RowText"
 import {weatherType} from '../../utilities/weatherType'
-const CurrentWeather = ( { weatherData}) => {
+const CurrentWeather = ( { weatherData, fetchweatherDataByCity }) => {
   const {
     wrapper, 
     container, 
@@ -13,11 +13,13 @@ const CurrentWeather = ( { weatherData}) => {
     highLow,
     bodyWrapper, 
     description, 
-    message
+    message,
+    additionalInfoWrapper,
+    additionalInfo
   } = styles
 
   const { 
-    main: { temp, feels_like, temp_max, temp_min}, 
+    main: { temp, feels_like, temp_max, temp_min, pressure, humidity}, 
     weather
   } = weatherData
 
@@ -44,6 +46,10 @@ const CurrentWeather = ( { weatherData}) => {
           messageOneStyles = {highLow} 
           messageTwoStyles = {highLow}
         />
+      </View>
+      <View style={additionalInfoWrapper}>
+        <Text style={additionalInfo}>{`Pressure: ${pressure} hPa`}</Text>
+        <Text style={additionalInfo}>{`Humidity: ${humidity}%`}</Text>
       </View>
       <RowText 
         messageOne = {weather[0]?.description} 
@@ -101,6 +107,16 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 25,
+    fontFamily: 'serif'
+  },
+  additionalInfoWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  additionalInfo: {
+    fontSize: 20,
+    color: 'black',
     fontFamily: 'serif'
   }
 }

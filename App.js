@@ -7,9 +7,10 @@ import {WEATHER_API_KEY} from '@env'
 import { useGetWeather } from './src/hooks/useGetWeather'
 import Error from './src/components/Error'
 
+
 const App = ()  => {
   const [loading, error, weather] = useGetWeather()
-
+  
   if (weather && weather.list && !loading) {
     return (
       <NavigationContainer>

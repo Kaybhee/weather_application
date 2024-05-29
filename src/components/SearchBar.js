@@ -1,20 +1,43 @@
 import React, { useState } from 'react';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-const SearchBar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const SearchWeather = ({ fetchWeatherDataByCity }) => {
+  const [city, setCity] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearch(searchTerm);
-    setSearchTerm(''); // Clear the search input after submitting
+  const handleSearch = () => {
+    if (city.trim()) {
+      fetchWeatherDataByCity(city);
+      setCity('');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-      <button type="submit">Search</button>
-    </form>
+    <View style={styles.searchContainer}>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter city name"
+        value={city}
+        onChangeText={setCity}
+      />
+      <Button title="Search" onPress={handleSearch} />
+    </View>
   );
 };
 
-export default SearchBar;
+const styles = StyleSheet.create({
+  searchContainer: {
+    flexDirection: 'row',
+    margin: 10,
+    alignItems: 'center',
+  },
+  TextInput: {
+    flex: 1,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+});
+
+export default SearchWeather;
